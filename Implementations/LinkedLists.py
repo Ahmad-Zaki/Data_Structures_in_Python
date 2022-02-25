@@ -17,15 +17,16 @@ class Node:
 
 class LinkedList(ABC):
     '''Base Class for linked lists implementations'''
-    def __init__(self, *vals) -> None:
+    def __init__(self, *vals, circular = False) -> None:
         self.head = None
         self.tail = None
-        self.length = 0
+        self.circular = circular
+        self._length = 0
         for val in vals:
             self.insert(val)
 
     def __len__(self) -> int:
-        return self.length
+        return self._length
 
     def __iter__(self):
         self.__node = self.head
@@ -35,7 +36,10 @@ class LinkedList(ABC):
         if self.__node is None: 
             raise StopIteration
         node = self.__node
-        self.__node = self.__node.next
+        if self.circular and self.__node == self.tail:
+            self.__node = None
+        else:
+            self.__node = self.__node.next
         return node
 
     def __contains__(self, val) -> bool:
@@ -55,6 +59,7 @@ class LinkedList(ABC):
 
         self.head = None
         self.tail = None
+        self._length = 0
         return self
 
 class SinglyLL(LinkedList):
@@ -94,13 +99,13 @@ class SinglyLL(LinkedList):
         self
         """
 
-        if index == None: index = self.length
+        if index == None: index = self._length
 
         if not isinstance(index, int):
             raise TypeError(f"Invalid type {type(index)}. Index must be int")
         
-        if index not in range(self.length + 1):
-            raise IndexError(f"index out of bound, please specify an index between 0 and {self.length}") 
+        if index not in range(self._length + 1):
+            raise IndexError(f"index out of bound, please specify an index between 0 and {self._length}") 
 
         new_node = Node(val)
 
@@ -114,18 +119,20 @@ class SinglyLL(LinkedList):
             new_node.next = self.head
             self.head = new_node
 
-        elif index == self.length:
+        elif index == self._length:
             #The new node is added to the end of the list.      
             self.tail.next = new_node
             self.tail = new_node 
         else:
+            #The new node is added to the middle of the list.
             previous_node = self.head
             for _ in range(index-1):
                 previous_node = previous_node.next
             new_node.next = previous_node.next
             previous_node.next = new_node
 
-        self.length += 1
+        if self.circular: self.tail.next = self.head
+        self._length += 1
         return self
 
     def pop(self, index: int = None):
@@ -147,13 +154,13 @@ class SinglyLL(LinkedList):
             return self
 
         if index == None: 
-            index = self.length - 1
+            index = self._length - 1
 
         if not isinstance(index, int):
             raise TypeError(f"Invalid type {type(index)}. Index must be int")
         
-        if index not in range(self.length):
-            raise IndexError(f"index out of bound, please specify an index between 0 and {self.length}") 
+        if index not in range(self._length):
+            raise IndexError(f"index out of bound, please specify an index between 0 and {self._length}") 
 
         if index == 0:
             if self.head == self.tail:
@@ -162,6 +169,7 @@ class SinglyLL(LinkedList):
                 self.tail = None
             else:
                 self.head = self.head.next
+                if self.circular: self.tail.next = self.head
         else:
             previous_node = self.head
             #Find the node that is directly before the deleted node.
@@ -170,13 +178,13 @@ class SinglyLL(LinkedList):
 
             previous_node.next = previous_node.next.next
             #If the deleted node is the last node then assign previous_node to the tail.
-            if previous_node.next is None:
+            if previous_node.next is None or previous_node.next == self.head:
                  self.tail = previous_node
 
-        self.length -= 1
+        self._length -= 1
         return self
 
-    def remove(self, val: int):
+    def remove(self, val):
         """Remove the node with the specified value from the Linked List.
         
         Parameters
@@ -200,6 +208,7 @@ class SinglyLL(LinkedList):
                 self.tail = None
             else:
                 self.head = self.head.next
+                if self.circular: self.tail.next = self.head
         else:
             previous_node = self.head
             #Find the node that is directly before the deleted node.
@@ -207,14 +216,13 @@ class SinglyLL(LinkedList):
                 if node.data == val: 
                     previous_node.next = node.next
                     break
-                else:
-                    previous_node = node
+                previous_node = node
             else:
                 raise ValueError(f"'{val}' does not exists in the list.")
 
             #If the deleted node is the last node then assign previous_node to the tail.
-            if previous_node.next is None:
-                 self.tail = previous_node
+            if previous_node.next is None or previous_node.next == self.head:
+                self.tail = previous_node
 
-        self.length -= 1
+        self._length -= 1
         return self

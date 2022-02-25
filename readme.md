@@ -14,6 +14,4 @@ This repository contains my implementation of some of the popular data structure
 |        Data Structure       |                 Implementation                  |   Status  |
 | --------------------------- | :---------------------------------------------: |-----------|
 | Singly Linked List          |[Source Code](Implementations/LinkedLists.py#L18)|    Done   |
-| Circular Singly Linked List |                       None                      |In progress|
 | Doubly Linked List          |                       None                      |In progress|
-| Circular Doubly Linked List |                       None                      |In progress|
