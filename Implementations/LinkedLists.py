@@ -17,13 +17,14 @@ class Node:
 
 class LinkedList(ABC):
     '''Base Class for linked lists implementations'''
-    def __init__(self, *vals, circular = False) -> None:
+    def __init__(self, vals: list = None, *, circular: bool = False) -> None:
         self.head = None
         self.tail = None
         self.circular = circular
         self._length = 0
-        for val in vals:
-            self.insert(val)
+        if vals:
+            for val in vals:
+                self.insert(val)
 
     def __len__(self) -> int:
         return self._length
@@ -69,11 +70,25 @@ class SinglyLL(LinkedList):
     ----------
     vals: list, tuple
         values of the nodes in the linked list. Values are added in their same order in vals.
+        default = None
+
+    circular: bool
+        Whether the list is circular or not. Must be specified as a keyword argument if you want to set it to True.
+        default = False
     
     Methods
     -------
-    insert(self, val, index: int = None)
+    insert(val, index: int = None)
         Insert a node containing the given value in the specified index.
+
+    def pop(index: int = None)
+        Remove the node with the specified index from the Linked List.
+
+    def remove(val):
+        Remove the node with the specified value from the Linked List.
+
+    delete():
+        Delete all elements of a linked list.
     """
 
     def __repr__(self) -> str:
