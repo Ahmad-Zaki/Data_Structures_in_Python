@@ -13,7 +13,7 @@ class Node:
         self.next = None
 
     def __repr__(self) -> str:
-        return f"{self.data}"
+        return f"Node({self.data})"
 
 class LinkedList(ABC):
     '''Base Class for linked lists implementations'''
@@ -43,16 +43,36 @@ class LinkedList(ABC):
             self.__node = self.__node.next
         return node
 
+    def __getitem__(self, index: int) -> Node:
+        if index < 0: 
+            index = max(0, self._length + index)
+        self._validate_index(index)
+
+        node = self.head
+        for _ in range(index):
+            node = node.next
+        return node
+
     def __contains__(self, val) -> bool:
         for node in self:
             if node.data == val: return True
         return False
 
+    def _validate_index(self, index: int) -> None:
+        """Validate index value."""
+        assert self._length > 0, "List is empty"
+
+        if not isinstance(index, int):
+            raise TypeError(f"Invalid type {type(index)}. Index must be int")
+        
+        if index not in range(self._length):
+            raise IndexError(f"Index out of bound, please specify an index between 0 and {self._length-1}") 
+
     @abstractmethod
     def insert(self, val):
         pass
 
-    def delete(self):
+    def delete(self) -> None:
         '''Delete all elements of a linked list.
         
         Once you set the head & tail to None, the garpage collector will delete all nodes one by one.
@@ -61,7 +81,6 @@ class LinkedList(ABC):
         self.head = None
         self.tail = None
         self._length = 0
-        return self
 
 class SinglyLL(LinkedList):
     """Single Linked List Class
