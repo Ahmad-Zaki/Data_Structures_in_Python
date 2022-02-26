@@ -7,7 +7,7 @@ Created on Fri Feb 25 16:58:57 2022
 from abc import ABC, abstractmethod
 
 class Node:
-    '''Create a singly linked list node'''
+    '''Create a linked list node'''
     def __init__(self, data = None) -> None:
         self.data = data
         self.next = None
