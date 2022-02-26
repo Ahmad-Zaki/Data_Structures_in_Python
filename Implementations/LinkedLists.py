@@ -65,7 +65,7 @@ class LinkedList(ABC):
         if not isinstance(index, int):
             raise TypeError(f"Invalid type {type(index)}. Index must be int")
         
-        if index not in range(self._length):
+        if index > self._length - 1:
             raise IndexError(f"Index out of bound, please specify an index between 0 and {self._length-1}") 
 
     @abstractmethod
@@ -159,9 +159,7 @@ class SinglyLL(LinkedList):
             self.tail = new_node 
         else:
             #The new node is added to the middle of the list.
-            previous_node = self.head
-            for _ in range(index-1):
-                previous_node = previous_node.next
+            previous_node = self[index - 1]
             new_node.next = previous_node.next
             previous_node.next = new_node
 
@@ -190,11 +188,7 @@ class SinglyLL(LinkedList):
         if index == None: 
             index = self._length - 1
 
-        if not isinstance(index, int):
-            raise TypeError(f"Invalid type {type(index)}. Index must be int")
-        
-        if index not in range(self._length):
-            raise IndexError(f"index out of bound, please specify an index between 0 and {self._length}") 
+        self._validate_index(index)
 
         if index == 0:
             if self.head == self.tail:
@@ -205,12 +199,10 @@ class SinglyLL(LinkedList):
                 self.head = self.head.next
                 if self.circular: self.tail.next = self.head
         else:
-            previous_node = self.head
             #Find the node that is directly before the deleted node.
-            for _ in range(index-1):
-                previous_node = previous_node.next
-
+            previous_node = self[index-1]
             previous_node.next = previous_node.next.next
+
             #If the deleted node is the last node then assign previous_node to the tail.
             if previous_node.next is None or previous_node.next == self.head:
                  self.tail = previous_node
