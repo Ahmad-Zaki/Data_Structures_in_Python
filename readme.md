@@ -9,9 +9,10 @@ This repository contains my implementation of some of the popular data structure
 
 ## Progress
 
-### Linked Lists
-
 |        Data Structure       |                 Implementation                  |   Status  |
 | --------------------------- | :---------------------------------------------: |-----------|
 | Singly Linked List          |[Source Code](Implementations/LinkedLists.py#L18)|    Done   |
 | Doubly Linked List          |                       None                      |In progress|
+
+
+Any feedback is highly appreciated :)
