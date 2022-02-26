@@ -20,8 +20,9 @@ class LinkedList(ABC):
     def __init__(self, vals: list = None, *, circular: bool = False) -> None:
         self.head = None
         self.tail = None
-        self.circular = circular
         self._length = 0
+        self.circular = circular
+
         if vals:
             for val in vals:
                 self.insert(val)
@@ -36,6 +37,7 @@ class LinkedList(ABC):
     def __next__(self) -> Node:
         if self.__node is None: 
             raise StopIteration
+            
         node = self.__node
         if self.circular and self.__node == self.tail:
             self.__node = None
@@ -68,19 +70,19 @@ class LinkedList(ABC):
         if index > self._length - 1:
             raise IndexError(f"Index out of bound, please specify an index between 0 and {self._length-1}") 
 
+    def delete(self) -> None:
+        '''Delete all elements of a linked list.
+        
+        Once you set the head & tail to None, the garbage collector will delete all nodes one by one.
+        '''
+
+        self.head = self.tail = None
+        self._length = 0
+
     @abstractmethod
     def insert(self, val):
         pass
 
-    def delete(self) -> None:
-        '''Delete all elements of a linked list.
-        
-        Once you set the head & tail to None, the garpage collector will delete all nodes one by one.
-        '''
-
-        self.head = None
-        self.tail = None
-        self._length = 0
 
 class SinglyLL(LinkedList):
     """Single Linked List Class
@@ -112,8 +114,10 @@ class SinglyLL(LinkedList):
 
     def __repr__(self) -> str:
         values = []
+
         for node in self:
             values.append(str(node.data))
+
         return "->".join(values)
 
     def insert(self, val, index: int = None):
@@ -145,8 +149,7 @@ class SinglyLL(LinkedList):
 
         if self.head is None:
             #If list has no nodes, assign node as both head and tail.
-            self.head = new_node
-            self.tail = new_node
+            self.head = self.tail = new_node
 
         elif index == 0:
             #The new node is added to the beginning of the list.
@@ -163,7 +166,9 @@ class SinglyLL(LinkedList):
             new_node.next = previous_node.next
             previous_node.next = new_node
 
-        if self.circular: self.tail.next = self.head
+        if self.circular: 
+            self.tail.next = self.head
+
         self._length += 1
         return self
 
@@ -193,18 +198,18 @@ class SinglyLL(LinkedList):
         if index == 0:
             if self.head == self.tail:
                 #If the linked list has only one node.
-                self.head = None
-                self.tail = None
+                self.head = self.tail = None
             else:
                 self.head = self.head.next
-                if self.circular: self.tail.next = self.head
+                if self.circular:
+                     self.tail.next = self.head
         else:
             #Find the node that is directly before the deleted node.
             previous_node = self[index-1]
             previous_node.next = previous_node.next.next
 
             #If the deleted node is the last node then assign previous_node to the tail.
-            if previous_node.next is None or previous_node.next == self.head:
+            if previous_node.next in [None, self.head]:
                  self.tail = previous_node
 
         self._length -= 1
@@ -230,11 +235,11 @@ class SinglyLL(LinkedList):
         if self.head.data == val:
             if self.head == self.tail:
                 #If the linked list has only one node.
-                self.head = None
-                self.tail = None
+                self.head = self.tail = None
             else:
                 self.head = self.head.next
-                if self.circular: self.tail.next = self.head
+                if self.circular: 
+                    self.tail.next = self.head
         else:
             previous_node = self.head
             #Find the node that is directly before the deleted node.
@@ -244,10 +249,11 @@ class SinglyLL(LinkedList):
                     break
                 previous_node = node
             else:
+                #If the loop is completed, the value doesn't exist in the list.
                 raise ValueError(f"'{val}' does not exists in the list.")
 
             #If the deleted node is the last node then assign previous_node to the tail.
-            if previous_node.next is None or previous_node.next == self.head:
+            if previous_node.next in [None, self.head]:
                 self.tail = previous_node
 
         self._length -= 1
