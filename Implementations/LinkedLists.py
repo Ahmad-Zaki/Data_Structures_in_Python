@@ -83,6 +83,14 @@ class LinkedList(ABC):
     @abstractmethod
     def insert(self, val):
         pass
+    
+    @abstractmethod
+    def pop(self, index: int):
+        pass
+
+    @abstractmethod
+    def remove(self, val):
+        pass
 
 
 class SinglyLL(LinkedList):
