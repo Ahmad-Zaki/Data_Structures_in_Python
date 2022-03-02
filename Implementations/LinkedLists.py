@@ -114,12 +114,7 @@ class SinglyLL(LinkedList):
     """
 
     def __repr__(self) -> str:
-        values = []
-
-        for node in self:
-            values.append(str(node.data))
-
-        return "->".join(values)
+        return "->".join([str(node.data) for node in self])
 
     def insert(self, val, index: int = None):
         """Insert a node containing the given value to the linked list in the specified index.
@@ -290,12 +285,7 @@ class DoublyLL(LinkedList):
     """
 
     def __repr__(self) -> str:
-        values = []
-
-        for node in self:
-            values.append(str(node.data))
-
-        return "<->".join(values)
+        return "<->".join([str(node.data) for node in self])
 
     def insert(self, val, index: int = None):
         """Insert a node containing the given value to the linked list in the specified index.
