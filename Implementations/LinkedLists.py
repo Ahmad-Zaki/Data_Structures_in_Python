@@ -124,7 +124,7 @@ class SinglyLL(LinkedList):
     def __repr__(self) -> str:
         return "->".join([str(node.data) for node in self])
 
-    def insert(self, val, index: int = None):
+    def insert(self, val, index: int = None) -> LinkedList:
         """Insert a node containing the given value to the linked list in the specified index.
         
         Parameters
@@ -176,7 +176,7 @@ class SinglyLL(LinkedList):
         self._length += 1
         return self
 
-    def pop(self, index: int = None):
+    def pop(self, index: int = None) -> LinkedList:
         """Remove the node with the specified index from the Linked List.
         
         Parameters
@@ -219,7 +219,7 @@ class SinglyLL(LinkedList):
         self._length -= 1
         return self
 
-    def remove(self, val):
+    def remove(self, val) -> LinkedList:
         """Remove the node with the specified value from the Linked List.
         
         Parameters
@@ -295,7 +295,7 @@ class DoublyLL(LinkedList):
     def __repr__(self) -> str:
         return "<->".join([str(node.data) for node in self])
 
-    def insert(self, val, index: int = None):
+    def insert(self, val, index: int = None) -> LinkedList:
         """Insert a node containing the given value to the linked list in the specified index.
         
         Parameters
@@ -354,7 +354,7 @@ class DoublyLL(LinkedList):
         self._length += 1
         return self
 
-    def pop(self, index: int = None):
+    def pop(self, index: int = None) -> LinkedList:
         """Remove the node with the specified index from the Linked List.
         
         Parameters
@@ -407,7 +407,7 @@ class DoublyLL(LinkedList):
         self._length -= 1
         return self
 
-    def remove(self, val):
+    def remove(self, val) -> LinkedList:
         """Remove the node with the specified value from the Linked List.
         
         Parameters
@@ -460,7 +460,7 @@ class DoublyLL(LinkedList):
         self._length -= 1
         return self
 
-    def delete(self):
+    def delete(self) -> None:
         '''Delete all elements of the linked list.
 
         Once you set the head & tail to None and next parameter in each node, the garbage collector will delete the nodes one by one.
