@@ -6,6 +6,7 @@ Created on Wed Mar 02 23:54:12 2022
 Queue data structure implementations using lists and linked lists.
 
 """
+from LinkedLists import SinglyLL
 from typing import Any
 
 class Queue:
@@ -74,7 +75,8 @@ class Queue:
         if vals is not None:
             if not hasattr(vals, '__iter__'):
                 raise TypeError("vals is not iterable")
-            assert capacity and len(vals) <= capacity, f"Cannot create queue with {len(vals)} elements and max capacity of {capacity}."
+            if capacity is not None:
+                assert len(vals) <= capacity, f"Cannot create queue with {len(vals)} elements and max capacity of {capacity}."
 
     def empty(self) -> bool:
         """Check if the queue is empty."""
@@ -132,7 +134,7 @@ class Queue:
 
         assert not self.empty(), "Queue is empty"
 
-        return self.list[0]
+        return self._elements[0]
 
     def delete(self) -> None:
         '''Remove all elements from the Queue.'''
