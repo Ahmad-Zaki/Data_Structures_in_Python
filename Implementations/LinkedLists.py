@@ -7,7 +7,7 @@ Created on Fri Feb 25 16:58:57 2022
 from abc import ABC, abstractmethod
 
 class Node:
-    '''Create a singly linked list node'''
+    '''Create a linked list node'''
     def __init__(self, data = None) -> None:
         self.data = data
         self.next = None
@@ -83,6 +83,14 @@ class LinkedList(ABC):
     @abstractmethod
     def insert(self, val):
         pass
+    
+    @abstractmethod
+    def pop(self, index: int):
+        pass
+
+    @abstractmethod
+    def remove(self, val):
+        pass
 
 
 class SinglyLL(LinkedList):
@@ -114,14 +122,9 @@ class SinglyLL(LinkedList):
     """
 
     def __repr__(self) -> str:
-        values = []
+        return "->".join([str(node.data) for node in self])
 
-        for node in self:
-            values.append(str(node.data))
-
-        return "->".join(values)
-
-    def insert(self, val, index: int = None):
+    def insert(self, val, index: int = None) -> LinkedList:
         """Insert a node containing the given value to the linked list in the specified index.
         
         Parameters
@@ -173,7 +176,7 @@ class SinglyLL(LinkedList):
         self._length += 1
         return self
 
-    def pop(self, index: int = None):
+    def pop(self, index: int = None) -> LinkedList:
         """Remove the node with the specified index from the Linked List.
         
         Parameters
@@ -216,7 +219,7 @@ class SinglyLL(LinkedList):
         self._length -= 1
         return self
 
-    def remove(self, val):
+    def remove(self, val) -> LinkedList:
         """Remove the node with the specified value from the Linked List.
         
         Parameters
@@ -290,14 +293,9 @@ class DoublyLL(LinkedList):
     """
 
     def __repr__(self) -> str:
-        values = []
+        return "<->".join([str(node.data) for node in self])
 
-        for node in self:
-            values.append(str(node.data))
-
-        return "<->".join(values)
-
-    def insert(self, val, index: int = None):
+    def insert(self, val, index: int = None) -> LinkedList:
         """Insert a node containing the given value to the linked list in the specified index.
         
         Parameters
@@ -356,7 +354,7 @@ class DoublyLL(LinkedList):
         self._length += 1
         return self
 
-    def pop(self, index: int = None):
+    def pop(self, index: int = None) -> LinkedList:
         """Remove the node with the specified index from the Linked List.
         
         Parameters
@@ -409,7 +407,7 @@ class DoublyLL(LinkedList):
         self._length -= 1
         return self
 
-    def remove(self, val):
+    def remove(self, val) -> LinkedList:
         """Remove the node with the specified value from the Linked List.
         
         Parameters
@@ -462,7 +460,7 @@ class DoublyLL(LinkedList):
         self._length -= 1
         return self
 
-    def delete(self):
+    def delete(self) -> None:
         '''Delete all elements of the linked list.
 
         Once you set the head & tail to None and next parameter in each node, the garbage collector will delete the nodes one by one.
