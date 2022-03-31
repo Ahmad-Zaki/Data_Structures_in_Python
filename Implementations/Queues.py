@@ -3,11 +3,16 @@ Author: Ahmad Elkholi
 
 Created on Wed Mar 02 23:54:12 2022
 
-Queue data structure implementations using lists and linked lists.
+Queue data structure implementations using lists and linked lists, and Circular Queue implementation.
 
 """
-from LinkedLists import SinglyLL
 from typing import Any
+
+from LinkedLists import SinglyLL
+
+FULL_QUEUE_ERROR_MSG = "Maximum queue capacity reached, unable to store more elements."
+EMPTY_QUEUE_ERROR_MSG = "Queue is empty."
+
 
 class Queue:
     """List-based implementation of Queue data structure.
@@ -73,10 +78,12 @@ class Queue:
                 raise ValueError("capacity must be greater than zero.")
 
         if vals is not None:
-            if not hasattr(vals, '__iter__'):
+            if not hasattr(vals, "__iter__"):
                 raise TypeError("vals is not iterable")
             if capacity is not None:
-                assert len(vals) <= capacity, f"Cannot create queue with {len(vals)} elements and max capacity of {capacity}."
+                assert (
+                    len(vals) <= capacity
+                ), f"Cannot create queue with {len(vals)} elements and max capacity of {capacity}."
 
     def empty(self) -> bool:
         """Check if the queue is empty."""
@@ -86,7 +93,7 @@ class Queue:
         """Check if the queue is full."""
         if self._capacity is None:
             return False
-        else: 
+        else:
             return self._size == self._capacity
 
     def enqueue(self, element: Any):
@@ -102,7 +109,7 @@ class Queue:
         self
         """
 
-        assert not self.full(), "Maximum queue capacity reached, unable to store more elements."
+        assert not self.full(), FULL_QUEUE_ERROR_MSG
 
         self._elements.append(element)
         self._size += 1
@@ -118,7 +125,7 @@ class Queue:
             The first element in the queue.
         """
 
-        assert not self.empty(), "Queue is empty."
+        assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
         self._size -= 1
         return self._elements.pop(0)
@@ -132,12 +139,12 @@ class Queue:
             The first element in the queue.
         """
 
-        assert not self.empty(), "Queue is empty"
+        assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
         return self._elements[0]
 
     def delete(self) -> None:
-        '''Remove all elements from the Queue.'''
+        """Remove all elements from the Queue."""
         self._elements = []
         self._size = 0
 
@@ -195,7 +202,7 @@ class QueueLL(Queue):
         self
         """
 
-        assert not self.full(), "Maximum queue capacity reached, unable to store more elements."
+        assert not self.full(), FULL_QUEUE_ERROR_MSG
 
         self._elements.insert(element)
         self._size += 1
@@ -211,7 +218,7 @@ class QueueLL(Queue):
             The first element in the queue.
         """
 
-        assert not self.empty(), "Queue is empty."
+        assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
         removed_element = self.peek()
         self._elements.pop(0)
@@ -219,6 +226,7 @@ class QueueLL(Queue):
         return removed_element
 
     def delete(self) -> None:
-        '''Remove all elements from the Queue.'''
+        """Remove all elements from the Queue."""
         self._elements.delete()
         self._size = 0
+
