@@ -9,13 +9,13 @@ This repository contains my implementation of some of the popular data structure
 
 ## Progress
 
-|       Data Structure      |                    Implementation                  |    Status   |
-| ------------------------- | -------------------------------------------------- | ----------- |
-| Singly Linked List        | [Source Code](Implementations/LinkedLists.py#L88)  |     Done    |
-| Doubly Linked List        | [Source Code](Implementations/LinkedLists.py#L264) |     Done    |
-| List-based Queue          | [Source Code](Implementations/Queues.py#L12)       |     Done    |
-| linkedlist-based Queue    | [Source Code](Implementations/Queues.py#L145)      |     Done    |
-| List-based Circular Queue |                      None                          | In progress |
+| Data Structure            | Implementation                                     | Status |
+| ------------------------- | -------------------------------------------------- | ------ |
+| Singly Linked List        | [Source Code](Implementations/LinkedLists.py#L88)  | Done   |
+| Doubly Linked List        | [Source Code](Implementations/LinkedLists.py#L264) | Done   |
+| List-based Queue          | [Source Code](Implementations/Queues.py#L12)       | Done   |
+| linkedlist-based Queue    | [Source Code](Implementations/Queues.py#L145)      | Done   |
+| List-based Circular Queue | [Source Code](Implementations/Queues.py#L231)      | Done   |
 
 
 Any feedback is highly appreciated :)
