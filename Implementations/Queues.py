@@ -49,28 +49,28 @@ class Queue:
     """
 
     def __init__(self, capacity: int = None, vals: list = None) -> None:
-        self._assert_params(capacity, vals)
-        self._capacity = capacity
-        self._elements = list(vals) if vals else []
-        self._size = len(self._elements)
+        self.__assert_params(capacity, vals)
+        self.__capacity = capacity
+        self.__elements = list(vals) if vals else []
+        self.__size = len(self.__elements)
 
     def __repr__(self) -> str:
-        return f"Queue({self._elements})"
+        return f"Queue({self.__elements})"
 
     def __len__(self) -> int:
-        return self._size
+        return self.__size
 
     def __iter__(self):
-        self.__queue_iterator = iter(self._elements)
+        self.__queue_iterator = iter(self.__elements)
         return self
 
     def __next__(self) -> Any:
         return next(self.__queue_iterator)
 
     def __contains__(self, element) -> bool:
-        return element in self._elements
+        return element in self.__elements
 
-    def _assert_params(self, capacity, vals) -> None:
+    def __assert_params(self, capacity, vals) -> None:
         if capacity is not None:
             if not isinstance(capacity, int):
                 raise TypeError("capacity must be of type 'int'.")
@@ -87,14 +87,11 @@ class Queue:
 
     def empty(self) -> bool:
         """Check if the queue is empty."""
-        return self._size == 0
+        return self.__size == 0
 
     def full(self) -> bool:
         """Check if the queue is full."""
-        if self._capacity is None:
-            return False
-        else:
-            return self._size == self._capacity
+        return self.__size == self.__capacity
 
     def enqueue(self, element: Any):
         """Add an element to the end of the queue.
@@ -111,8 +108,8 @@ class Queue:
 
         assert not self.full(), FULL_QUEUE_ERROR_MSG
 
-        self._elements.append(element)
-        self._size += 1
+        self.__elements.append(element)
+        self.__size += 1
 
         return self
 
@@ -127,8 +124,8 @@ class Queue:
 
         assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
-        self._size -= 1
-        return self._elements.pop(0)
+        self.__size -= 1
+        return self.__elements.pop(0)
 
     def peek(self) -> Any:
         """Access the first element of the queue.
@@ -141,12 +138,12 @@ class Queue:
 
         assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
-        return self._elements[0]
+        return self.__elements[0]
 
     def delete(self) -> None:
         """Remove all elements from the Queue."""
-        self._elements = []
-        self._size = 0
+        self.__elements = []
+        self.__size = 0
 
 
 class QueueLL(Queue):
@@ -184,10 +181,10 @@ class QueueLL(Queue):
     """
 
     def __init__(self, capacity: int = None, vals: list = None) -> None:
-        self._assert_params(capacity, vals)
-        self._capacity = capacity
-        self._elements = SinglyLL(vals)
-        self._size = len(self._elements)
+        self.__assert_params(capacity, vals)
+        self.__capacity = capacity
+        self.__elements = SinglyLL(vals)
+        self.__size = len(self.__elements)
 
     def enqueue(self, element: Any):
         """Add an element to the end of the queue.
@@ -204,8 +201,8 @@ class QueueLL(Queue):
 
         assert not self.full(), FULL_QUEUE_ERROR_MSG
 
-        self._elements.insert(element)
-        self._size += 1
+        self.__elements.insert(element)
+        self.__size += 1
 
         return self
 
@@ -221,34 +218,34 @@ class QueueLL(Queue):
         assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
         removed_element = self.peek()
-        self._elements.pop(0)
-        self._size -= 1
+        self.__elements.pop(0)
+        self.__size -= 1
         return removed_element
 
     def delete(self) -> None:
         """Remove all elements from the Queue."""
-        self._elements.delete()
-        self._size = 0
+        self.__elements.delete()
+        self.__size = 0
 
 
 class QueueCirc:
     def __init__(self, capacity: int) -> None:
-        self._capacity = capacity
-        self._elements = capacity * [None]
-        self._first = -1
-        self._last = -1
-        self._size = 0
+        self.__capacity = capacity
+        self.__elements = capacity * [None]
+        self.__first = -1
+        self.__last = -1
+        self.__size = 0
 
     def __len__(self) -> int:
-        return self._size
+        return self.__size
 
     def empty(self) -> bool:
         """Check if the queue is empty."""
-        return self._size == 0
+        return self.__size == 0
 
     def full(self) -> bool:
         """Check if the queue is full."""
-        return self._size == self._capacity
+        return self.__size == self.__capacity
 
     def enqueue(self, element: Any):
         """Add an element to the end of the queue.
@@ -266,12 +263,12 @@ class QueueCirc:
         assert not self.full(), FULL_QUEUE_ERROR_MSG
 
         if self.empty():
-            self._first = self._last = 0
+            self.__first = self.__last = 0
         else:
-            self._last = (self._last + 1) % self._capacity
+            self.__last = (self.__last + 1) % self.__capacity
 
-        self._elements[self._last] = element
-        self._size += 1
+        self.__elements[self.__last] = element
+        self.__size += 1
         return self
 
     def dequeue(self) -> Any:
@@ -285,14 +282,14 @@ class QueueCirc:
 
         assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
-        removed_element = self._elements[self._first]
-        self._elements[self._first] = None
+        removed_element = self.__elements[self.__first]
+        self.__elements[self.__first] = None
 
-        self._size -= 1
-        if self._size == 0:
-            self._first = self._last = -1
+        self.__size -= 1
+        if self.__size == 0:
+            self.__first = self.__last = -1
         else:
-            self._first = (self._first + 1) % self._capacity
+            self.__first = (self.__first + 1) % self.__capacity
 
         return removed_element
 
@@ -307,10 +304,10 @@ class QueueCirc:
 
         assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
 
-        return self._elements[self._first]
+        return self.__elements[self.__first]
 
     def delete(self) -> None:
         """Remove all elements from the Queue."""
-        self._elements = self._capacity * [None]
-        self._first = self._last = -1
-        self._size = 0
+        self.__elements = self.__capacity * [None]
+        self.__first = self.__last = -1
+        self.__size = 0
