@@ -230,3 +230,87 @@ class QueueLL(Queue):
         self._elements.delete()
         self._size = 0
 
+
+class QueueCirc:
+    def __init__(self, capacity: int) -> None:
+        self._capacity = capacity
+        self._elements = capacity * [None]
+        self._first = -1
+        self._last = -1
+        self._size = 0
+
+    def __len__(self) -> int:
+        return self._size
+
+    def empty(self) -> bool:
+        """Check if the queue is empty."""
+        return self._size == 0
+
+    def full(self) -> bool:
+        """Check if the queue is full."""
+        return self._size == self._capacity
+
+    def enqueue(self, element: Any):
+        """Add an element to the end of the queue.
+        
+        Parameters
+        ----------
+        element: Any
+            The element that is added to the queue.
+
+        Returns
+        -------
+        self
+        """
+
+        assert not self.full(), FULL_QUEUE_ERROR_MSG
+
+        if self.empty():
+            self._first = self._last = 0
+        else:
+            self._last = (self._last + 1) % self._capacity
+
+        self._elements[self._last] = element
+        self._size += 1
+        return self
+
+    def dequeue(self) -> Any:
+        """pop the first element in the queue.
+
+        Returns
+        -------
+        Element: Any
+            The first element in the queue.
+        """
+
+        assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
+
+        removed_element = self._elements[self._first]
+        self._elements[self._first] = None
+
+        self._size -= 1
+        if self._size == 0:
+            self._first = self._last = -1
+        else:
+            self._first = (self._first + 1) % self._capacity
+
+        return removed_element
+
+    def peek(self) -> Any:
+        """Access the first element in the queue.
+
+        Returns
+        -------
+        Element: Any
+            The first element in the queue.
+        """
+
+        assert not self.empty(), EMPTY_QUEUE_ERROR_MSG
+
+        return self._elements[self._first]
+
+    def delete(self) -> None:
+        """Remove all elements from the Queue."""
+        self._elements = self._capacity * [None]
+        self._first = self._last = -1
+        self._size = 0
