@@ -1,4 +1,5 @@
-from Implementations.LinkedLists import Node
+import pytest
+from Implementations.LinkedLists import DoublyLL, Node, SinglyLL
 
 
 class TestNode:
@@ -19,3 +20,15 @@ class TestNode:
         assert node_1 != 1
         assert node_1 != node_a
         assert node_1 != node_2
+
+
+class TestSinglyLL:
+    def test_repr(self) -> None:
+        empty_sll = repr(SinglyLL())
+        filled_sll = repr(SinglyLL([1, "a", 2.5]))
+        assert (
+            empty_sll == ""
+        ), f"repr output ('{empty_sll}') doesn't match expected output ('')"
+        assert (
+            filled_sll == "1->a->2.5"
+        ), f"repr output ('{filled_sll}') doesn't match expected output ('1->a->2.5')"
