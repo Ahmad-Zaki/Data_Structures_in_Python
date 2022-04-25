@@ -19,6 +19,9 @@ class Node:
     def __repr__(self) -> str:
         return f"Node({self.data})"
 
+    def __eq__(self, __o: object) -> bool:
+        return self.data == __o.data if isinstance(__o, Node) else False
+
 
 class LinkedList(ABC):
     """Base Class for linked lists implementations"""
