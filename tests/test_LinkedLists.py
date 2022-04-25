@@ -51,3 +51,60 @@ class TestSinglyLL:
 
         empty_lst.pop()
         assert len(empty_lst) == 0, f"list length should be 0, not {len(lst)}"
+
+    def test_insert(self) -> None:
+        # Non circular list:
+        lst = SinglyLL(circular=False)
+        assert (
+            lst.head is lst.tail is None
+        ), f"head and tail must be None, not {lst.head} or {lst.tail}"
+
+        lst.insert("a")
+        assert (
+            lst.head == lst.tail == Node("a")
+        ), f"head and tail must be Node(a), not {lst.head} or {lst.tail}"
+
+        lst.insert("b")
+        assert lst.head == Node("a"), f"head must be Node(a), not {lst.head}"
+        assert lst.tail == Node("b"), f"tail must be Node(b), not {lst.tail}"
+        assert (
+            lst.head.next == lst.tail
+        ), f"head.next must be {lst.tail}, not {lst.head.next}"
+        assert lst.tail.next == None, f"tail.next must be None, not {lst.tail.next}"
+
+        lst.insert(1, 0)
+        assert lst.head == Node(1), f"head must be Node(1), not {lst.head}"
+        assert lst.head.next == Node("a"), f"head must be Node(a), not {lst.head}"
+
+        lst.insert(5, 2)
+        assert (
+            lst[-2].next == lst.tail
+        ), f"inserted_node.next must be {lst.tail}, not {lst[-2].next}"
+
+        lst.insert(-5.5, 1)
+        assert lst.head.next == Node(
+            -5.5
+        ), f"head.next must be Node(-5.5), not {lst.head.next}"
+
+        for i in [2.5, -7.8, "a"]:
+            with pytest.raises(TypeError) as error_msg:
+                lst.insert("foo", i)
+            assert error_msg.match(
+                f"Invalid type {type(i)}. Index must be int"
+            ), f"Unexpected error message: '{error_msg}'"
+
+        for i in [-1, -10, 6, 12]:
+            with pytest.raises(IndexError) as error_msg:
+                lst.insert("foo", i)
+            assert error_msg.match(
+                f"index out of bound, please specify an index between 0 and {len(lst)}"
+            ), f"Unexpected error message: '{error_msg}'"
+
+        # Circular list:
+        circular_lst = SinglyLL(circular=True)
+
+        for i in [1, 2, 3]:
+            circular_lst.insert(i)
+            assert (
+                circular_lst.tail.next == circular_lst.head
+            ), f"tail.next must be the list head ({lst.head}, not {lst.tail.next})"
