@@ -32,3 +32,22 @@ class TestSinglyLL:
         assert (
             filled_sll == "1->a->2.5"
         ), f"repr output ('{filled_sll}') doesn't match expected output ('1->a->2.5')"
+
+    def test_len(self) -> None:
+        lst = SinglyLL([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        assert len(lst) == 10, f"list length should be 10, not {len(lst)}"
+
+        lst.pop()
+        assert len(lst) == 9, f"list length should be 9, not {len(lst)}"
+
+        lst.insert(10)
+        assert len(lst) == 10, f"list length should be 10, not {len(lst)}"
+
+        empty_lst = SinglyLL()
+        assert len(empty_lst) == 0, f"list length should be 0, not {len(lst)}"
+
+        empty_lst.insert(1)
+        assert len(empty_lst) == 1, f"list length should be 1, not {len(lst)}"
+
+        empty_lst.pop()
+        assert len(empty_lst) == 0, f"list length should be 0, not {len(lst)}"
