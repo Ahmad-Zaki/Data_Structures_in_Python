@@ -87,18 +87,16 @@ class TestSinglyLL:
         ), f"head.next must be Node(-5.5), not {lst.head.next}"
 
         for i in [2.5, -7.8, "a"]:
-            with pytest.raises(TypeError) as error_msg:
+            error_msg = f"Invalid type {type(i)}. Index must be int"
+            with pytest.raises(TypeError, match=error_msg):
                 lst.insert("foo", i)
-            assert error_msg.match(
-                f"Invalid type {type(i)}. Index must be int"
-            ), f"Unexpected error message: '{error_msg}'"
 
         for i in [-1, -10, 6, 12]:
-            with pytest.raises(IndexError) as error_msg:
-                lst.insert("foo", i)
-            assert error_msg.match(
+            error_msg = (
                 f"index out of bound, please specify an index between 0 and {len(lst)}"
-            ), f"Unexpected error message: '{error_msg}'"
+            )
+            with pytest.raises(IndexError, match=error_msg):
+                lst.insert("foo", i)
 
         # Circular list:
         circular_lst = SinglyLL(circular=True)
