@@ -55,9 +55,9 @@ class LinkedList(ABC):
         return node
 
     def __getitem__(self, index: int) -> Node:
+        self._validate_index(index)
         if index < 0:
             index = max(0, self._length + index)
-        self._validate_index(index)
 
         node = self.head
         for _ in range(index):
