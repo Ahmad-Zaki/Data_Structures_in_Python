@@ -106,3 +106,49 @@ class TestSinglyLL:
             assert (
                 circular_lst.tail.next == circular_lst.head
             ), f"tail.next must be the list head ({lst.head}, not {lst.tail.next})"
+
+    def test_pop(self) -> None:
+        lst = SinglyLL()
+
+        assert (
+            lst.pop() == lst
+        ), "popping from an empty list should return the same list without modification"
+
+        lst.insert(1).pop(0)
+        assert (
+            lst.head is lst.tail is None
+        ), f"lst must be empty after pop, instead head is {lst.head} and tail is {lst.tail}"
+
+        for i in [1, 2, 3, 4, 5]:
+            lst.insert(i)
+
+        lst.pop(0)
+        assert lst.head == Node(2), f"new head node must be Node(2), not {lst.head}"
+
+        lst.pop()
+        assert lst.tail == Node(4), f"new tail node must be Node(4), not {lst.tail}"
+        assert lst.tail.next is None, f"tail.next should be None, not {lst.tail.next}"
+
+        lst.pop(1)
+        assert lst.head.next == lst.tail
+
+        for i in [2.5, -7.8, "a"]:
+            error_msg = f"Invalid type {type(i)}. Index must be int"
+            with pytest.raises(TypeError, match=error_msg):
+                lst.pop(i)
+
+        for i in [2, 3, 4, 5]:
+            error_msg = f"Index out of bound, please specify an index between 0 and {len(lst)-1}"
+            with pytest.raises(IndexError, match=error_msg):
+                lst.pop(i)
+
+        # Test circular list:
+        circular_lst = SinglyLL([1, 2, 3, 4, 5], circular=True)
+
+        circular_lst.pop()
+        assert circular_lst.tail == Node(
+            4
+        ), f"new tail node must be Node(4), not {circular_lst.tail}"
+        assert (
+            circular_lst.tail.next == circular_lst.head
+        ), f" tail.next should refer to head ({circular_lst.head}, not {circular_lst.tail.next})"
