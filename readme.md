@@ -1,4 +1,5 @@
-[![Build Status](https://app.travis-ci.com/Ahmad-Zaki/Data_Structures_in_Python.svg?branch=main)](https://app.travis-ci.com/Ahmad-Zaki/Data_Structures_in_Python)
+[![Travis CI](https://app.travis-ci.com/Ahmad-Zaki/Data_Structures_in_Python.svg?branch=main)](https://app.travis-ci.com/Ahmad-Zaki/Data_Structures_in_Python)
+[![codecov](https://codecov.io/gh/Ahmad-Zaki/Data_Structures_in_Python/branch/main/graph/badge.svg?token=UVACNDGU1U)](https://codecov.io/gh/Ahmad-Zaki/Data_Structures_in_Python)
 
 ## Introduction
 
