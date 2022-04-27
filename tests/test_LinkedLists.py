@@ -205,3 +205,14 @@ class TestSinglyLL:
         ), f"list head and tail must be None, not {circular_lst.head} or {circular_lst.tail}"
         assert len(circular_lst) == 0, f"list length must be 0, not {len(circular_lst)}"
 
+    def test_iteration(self) -> None:
+        elements = [1, 2, 3, 4, 5, 6, 7, 8]
+        lst = SinglyLL(elements)
+        circular_lst = SinglyLL(elements)
+
+        for node, val in zip(lst, elements):
+            assert node.data == val
+
+        for node, val in zip(circular_lst, elements):
+            assert node.data == val
+
