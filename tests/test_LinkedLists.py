@@ -188,3 +188,20 @@ class TestSinglyLL:
             circular_lst.tail.next == circular_lst.head
         ), f" tail.next should refer to head ({circular_lst.head}, not {circular_lst.tail.next})"
 
+    def test_delete(self) -> None:
+        lst = SinglyLL([1, 2, 3, 4, 5, 6])
+        circular_lst = SinglyLL([1, 2, 3, 4, 5, 6, 7, 8])
+
+        lst.delete()
+        circular_lst.delete()
+
+        assert (
+            lst.head is lst.tail is None
+        ), f"list head and tail must be None, not {lst.head} or {lst.tail}"
+        assert len(lst) == 0, f"list length must be 0, not {len(lst)}"
+
+        assert (
+            circular_lst.head is circular_lst.tail is None
+        ), f"list head and tail must be None, not {circular_lst.head} or {circular_lst.tail}"
+        assert len(circular_lst) == 0, f"list length must be 0, not {len(circular_lst)}"
+
