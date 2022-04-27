@@ -152,3 +152,39 @@ class TestSinglyLL:
         assert (
             circular_lst.tail.next == circular_lst.head
         ), f" tail.next should refer to head ({circular_lst.head}, not {circular_lst.tail.next})"
+
+    def test_remove(self) -> None:
+        lst = SinglyLL()
+
+        assert (
+            lst.remove(1) == lst
+        ), "removing from an empty list should return the same list without modification"
+
+        lst = SinglyLL([1, 2, 3, 4, 5])
+
+        lst.remove(1)
+        assert lst.head == Node(2), f"new head node must be Node(2), not {lst.head}"
+
+        lst.remove(5)
+        assert lst.tail == Node(4), f"new tail node must be Node(4), not {lst.tail}"
+        assert lst.tail.next is None, f"tail.next should be None, not {lst.tail.next}"
+
+        lst.remove(3)
+        assert len(lst) == 2, f"list length should be 2, not {len(lst)}"
+
+        for i in [1, 3, 5, "a", 12, -2, -4]:
+            error_msg = f"'{i}' does not exists in the list."
+            with pytest.raises(ValueError, match=error_msg):
+                lst.remove(i)
+
+        # Test circular list:
+        circular_lst = SinglyLL([1, 2, 3, 4, 5], circular=True)
+
+        circular_lst.remove(5)
+        assert circular_lst.tail == Node(
+            4
+        ), f"new tail node must be Node(4), not {circular_lst.tail}"
+        assert (
+            circular_lst.tail.next == circular_lst.head
+        ), f" tail.next should refer to head ({circular_lst.head}, not {circular_lst.tail.next})"
+
