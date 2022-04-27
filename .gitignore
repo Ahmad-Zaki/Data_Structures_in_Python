@@ -7,6 +7,5 @@
 .vscode/*
 
 # Virtual Environment Setups
-setup.py
 dsip_venv/*
 datastructures.egg-info/*
