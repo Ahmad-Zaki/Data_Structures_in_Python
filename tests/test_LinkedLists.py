@@ -234,3 +234,16 @@ class TestSinglyLL:
                 error_msg = f"Invalid type {type(i)}. Index must be int"
                 with pytest.raises(TypeError, match=error_msg):
                     l[i]
+
+    def test_contains(self) -> None:
+        vals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        lst = SinglyLL(vals)
+        circular_lst = SinglyLL(vals, circular=True)
+
+        for l in [lst, circular_lst]:
+            for i in vals:
+                assert i in l
+
+            for i in [-1, -2, "a", "b", "c"]:
+                assert i not in l
+
