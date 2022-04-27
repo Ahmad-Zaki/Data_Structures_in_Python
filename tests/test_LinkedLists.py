@@ -1,5 +1,5 @@
 import pytest
-from Implementations.LinkedLists import DoublyLL, Node, SinglyLL
+from Implementations.LinkedLists import Node, SinglyLL
 
 
 class TestNode:
@@ -145,6 +145,11 @@ class TestSinglyLL:
         # Test circular list:
         circular_lst = SinglyLL([1, 2, 3, 4, 5], circular=True)
 
+        circular_lst.pop(0)
+        assert circular_lst.head == Node(
+            2
+        ), f"new head node must be Node(2), not {circular_lst.head}"
+
         circular_lst.pop()
         assert circular_lst.tail == Node(
             4
@@ -159,6 +164,12 @@ class TestSinglyLL:
         assert (
             lst.remove(1) == lst
         ), "removing from an empty list should return the same list without modification"
+
+        lst = SinglyLL([1])
+        lst.remove(1)
+        assert (
+            lst.head is lst.tail is None
+        ), f"empty list head and tail must be None, not {lst.head} or {lst.tail}"
 
         lst = SinglyLL([1, 2, 3, 4, 5])
 
@@ -179,6 +190,11 @@ class TestSinglyLL:
 
         # Test circular list:
         circular_lst = SinglyLL([1, 2, 3, 4, 5], circular=True)
+
+        circular_lst.remove(1)
+        assert circular_lst.head == Node(
+            2
+        ), f"new head node must be Node(2), not {circular_lst.head}"
 
         circular_lst.remove(5)
         assert circular_lst.tail == Node(
