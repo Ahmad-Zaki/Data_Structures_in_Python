@@ -216,3 +216,21 @@ class TestSinglyLL:
         for node, val in zip(circular_lst, elements):
             assert node.data == val
 
+    def test_getitem(self) -> None:
+        vals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        lst = SinglyLL(vals)
+        circular_lst = SinglyLL(vals, circular=True)
+
+        for l in [lst, circular_lst]:
+            for i in range(-10, 10):
+                assert l[i].data == vals[i]
+
+            for i in range(10, 15):
+                error_msg = f"Index out of bound, please specify an index between 0 and {len(lst)-1}"
+                with pytest.raises(IndexError, match=error_msg):
+                    l[i]
+
+            for i in [1.5, -8.5, -12.5, "a"]:
+                error_msg = f"Invalid type {type(i)}. Index must be int"
+                with pytest.raises(TypeError, match=error_msg):
+                    l[i]
