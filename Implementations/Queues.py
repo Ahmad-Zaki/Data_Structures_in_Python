@@ -232,7 +232,7 @@ class QueueCirc:
     def __init__(self, capacity: int) -> None:
         self.__capacity = capacity
         self.__elements = capacity * [None]
-        self.__first = -1
+        self.__first = 0
         self.__last = -1
         self.__size = 0
 
@@ -262,11 +262,7 @@ class QueueCirc:
 
         assert not self.full(), FULL_QUEUE_ERROR_MSG
 
-        if self.empty():
-            self.__first = self.__last = 0
-        else:
-            self.__last = (self.__last + 1) % self.__capacity
-
+        self.__last = (self.__last + 1) % self.__capacity
         self.__elements[self.__last] = element
         self.__size += 1
         return self
@@ -284,13 +280,8 @@ class QueueCirc:
 
         removed_element = self.__elements[self.__first]
         self.__elements[self.__first] = None
-
+        self.__first = (self.__first + 1) % self.__capacity
         self.__size -= 1
-        if self.__size == 0:
-            self.__first = self.__last = -1
-        else:
-            self.__first = (self.__first + 1) % self.__capacity
-
         return removed_element
 
     def peek(self) -> Any:
@@ -309,5 +300,6 @@ class QueueCirc:
     def delete(self) -> None:
         """Remove all elements from the Queue."""
         self.__elements = self.__capacity * [None]
-        self.__first = self.__last = -1
+        self.__first = 0
+        self.__last = -1
         self.__size = 0
