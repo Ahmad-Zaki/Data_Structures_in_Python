@@ -229,6 +229,35 @@ class QueueLL(Queue):
 
 
 class QueueCirc(Queue):
+    """a List-based implementation of the Circular Queue data structure. It is a special version of queue where the last element of the queue is connected to the first element of the queue forming a circle.
+    The operations are performed based on FIFO (First In First Out) principle. It is also called 'Ring Buffer'. 
+    
+    Parameters
+    ----------
+    capacity: int
+        Determine the maximum amount of elements a Queue can carry.
+
+    Methods
+    -------
+    empty() -> bool:
+        Check if the queue is empty.
+
+    full() -> bool:
+        Check if the queue is full.
+
+    enqueue(element) -> self:
+        Add an element to the end of the queue.
+
+    dequeue() -> Any:
+        pop the first element in the queue.
+
+    peek() -> Any:
+        Access the first element of the queue.
+
+    delete() -> None:
+        Remove all elements from the Queue.
+    """
+
     def __init__(self, capacity: int) -> None:
         self._capacity = capacity
         self._elements = capacity * [None]
