@@ -19,6 +19,8 @@ This repository contains my implementation of some of the popular data structure
 | List-based Queue          | [Source Code](Implementations/Queues.py#L12)       | Done   | In progress | 0%       |
 | linkedlist-based Queue    | [Source Code](Implementations/Queues.py#L145)      | Done   | In progress | 0%       |
 | List-based Circular Queue | [Source Code](Implementations/Queues.py#L231)      | Done   | In progress | 0%       |
+| List-based Stack          | [Source Code](Implementations/Stacks.py#L17)       | Done   | In progress | 0%       |
+| linkedlist-based Stack    | [Source Code](Implementations/Stacks.py#L145)      | Done   | In progress | 0%       |
 
 
 Any feedback is highly appreciated :)
