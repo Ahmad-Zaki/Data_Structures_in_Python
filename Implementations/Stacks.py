@@ -8,12 +8,14 @@ Stack data structure implementations using lists and linked lists.
 """
 from typing import Any
 
+from LinkedLists import SinglyLL
+
 FULL_STACK_ERROR_MSG = "Maximum stack capacity reached, unable to store more elements."
 EMPTY_STACK_ERROR_MSG = "Stack is empty."
 
 
 class Stack:
-    """List-based implementation of Stack data structure.
+    """List-based implementation of the Stack data structure.
     
     Parameters
     ----------
@@ -137,4 +139,99 @@ class Stack:
     def delete(self) -> None:
         """Remove all elements from the stack."""
         self._elements = []
+        self._size = 0
+
+
+class StackLL(Stack):
+    """LinkedList-based implementation of the Stack data structure.
+    
+    Parameters
+    ----------
+    capacity: int
+        Determine the maximum amount of elements a Stack can carry. If unspecified, Stack capacity will be limitless.
+        default = None
+
+    vals: iterable
+        a group of elements that are added to the Stack during its construction. If unspecified, an empty Stack is created. If the number of elements in `vals` exceeds the specified capacity, An assertion error is raised.
+        default = None
+
+    Methods
+    -------
+    empty() -> bool:
+        Check if the stack is empty.
+
+    full() -> bool:
+        Check if the stack is full.
+
+    push(element) -> self:
+        Add an element to the top of the stack.
+
+    pop() -> Any:
+        Remove the top element in the stack.
+
+    peek() -> Any:
+        Access the top element of the stack.
+
+    delete() -> None:
+        Remove all elements from the stack.
+    """
+
+    def __init__(self, capacity: int = None, vals: list = None) -> None:
+        self._assert_params(capacity, vals)
+        self._capacity = capacity
+        self._elements = SinglyLL(vals)
+        self._size = len(self._elements)
+
+    def push(self, element: Any):
+        """Add an element to the top of the stack.
+        
+        Parameters
+        ----------
+        element: Any
+            The element that is added to the stack.
+
+        Returns
+        -------
+        self
+        """
+
+        assert not self.full(), FULL_STACK_ERROR_MSG
+
+        self._elements.insert(element)
+        self._size += 1
+
+        return self
+
+    def pop(self) -> Any:
+        """Remove the top element in the stack.
+
+        Returns
+        -------
+        Element: Any
+            The first element in the stack.
+        """
+
+        assert not self.empty(), EMPTY_STACK_ERROR_MSG
+
+        removed_element = self.peek()
+        self._elements.pop()
+        self._size -= 1
+        return removed_element
+
+    def peek(self) -> Any:
+        """Access the top element of the stack.
+
+        Returns
+        -------
+        Element: Any
+            The top element in the stack.
+        """
+
+        assert not self.empty(), EMPTY_STACK_ERROR_MSG
+
+        return self._elements.tail.data
+
+    def delete(self) -> None:
+        """Remove all elements from the stack."""
+        self._elements.delete()
         self._size = 0
